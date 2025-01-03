@@ -12,6 +12,3 @@ services:
       - .env
     network_mode: "host"
 
-volumes:
-  static_volume:
-  media_volume:
