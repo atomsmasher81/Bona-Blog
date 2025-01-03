@@ -3,13 +3,16 @@ version: '3.8'
 services:
   web:
     build: .
-    command: gunicorn bona_blog.wsgi:application --bind 0.0.0.0:8001
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             gunicorn bona_blog.wsgi:application --bind 0.0.0.0:8001"
     volumes:
       - /var/www/blog.signwith.co/staticfiles:/code/staticfiles
       - /var/www/blog.signwith.co/media:/code/media
     env_file:
       - .env
     network_mode: "host"
+    user: www-data
 
 volumes:
   static_volume:
