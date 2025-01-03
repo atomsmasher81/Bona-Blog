@@ -3,10 +3,15 @@ version: '3.8'
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8001
+    command: gunicorn bona_blog.wsgi:application --bind 0.0.0.0:8001
     volumes:
-      - .:/code
+      - /var/www/blog.signwith.co/staticfiles:/code/staticfiles
+      - /var/www/blog.signwith.co/media:/code/media
     env_file:
       - .env
     network_mode: "host"
+
+volumes:
+  static_volume:
+  media_volume:
 

@@ -38,7 +38,8 @@ RUN mkdir -p /code/staticfiles /code/media
 
 # Install dependencies
 COPY Pipfile Pipfile.lock /code/
-RUN pip install pipenv && pipenv install --system
+RUN pip install pipenv && pipenv install --system && \
+    pip install gunicorn
 
 # Remove build dependencies
 RUN apk --purge del .build-deps
