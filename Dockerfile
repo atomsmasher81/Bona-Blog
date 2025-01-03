@@ -32,9 +32,9 @@ WORKDIR /code
 # Create static and media directories
 RUN mkdir -p /code/staticfiles /code/media
 
-# Create www-data user and group
-RUN addgroup -g 82 -S www-data && \
-    adduser -u 82 -S -D -G www-data www-data
+# Modify www-data user (it already exists in debian)
+RUN usermod -u 82 www-data && \
+    groupmod -g 82 www-data
 
 # Install dependencies
 COPY Pipfile Pipfile.lock /code/
