@@ -6,12 +6,6 @@ services:
     command: python manage.py runserver 0.0.0.0:8001
     volumes:
       - .:/code
-    ports:
-      - "8001:8001"
     env_file:
       - .env
-    environment:
-      - DB_HOST=host.docker.internal  # Special DNS name to access host machine
-      - PYTHONUNBUFFERED=1
-    extra_hosts:
-      - "host.docker.internal:host-gateway"  # Required for Docker to resolve host.docker.internal
+    network_mode: "host"
