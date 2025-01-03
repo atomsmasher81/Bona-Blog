@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'taggit',
-    'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
@@ -57,6 +56,9 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
 
  ]
+
+if DEBUG == 'True':
+    INSTALLED_APPS.append('debug_toolbar')
 
 INTERNAL_IPS = ['127.0.0.1', '::1']
 
