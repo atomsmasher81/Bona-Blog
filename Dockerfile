@@ -1,34 +1,29 @@
 # Author: William Kwabla
 
-# Python version
-FROM python:3.7-alpine
+# Use Python 3.10 slim instead of alpine for better compatibility
+FROM python:3.10-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
-RUN apk add --no-cache \
-    postgresql-libs \
-    jpeg-dev \
-    zlib-dev \
-    freetype-dev \
-    lcms2-dev \
-    openjpeg-dev \
-    tiff-dev \
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    libjpeg-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libopenjp2-7-dev \
+    libtiff5-dev \
     tk-dev \
     tcl-dev \
-    harfbuzz-dev \
-    fribidi-dev
-
-# Install build dependencies
-RUN apk add --no-cache --virtual .build-deps \
+    libharfbuzz-dev \
+    libfribidi-dev \
     gcc \
-    musl-dev \
-    postgresql-dev \
     python3-dev \
-    libffi-dev \
-    build-base
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set work directory
 WORKDIR /code
@@ -37,12 +32,10 @@ WORKDIR /code
 RUN mkdir -p /code/staticfiles /code/media
 
 # Install dependencies
-COPY Pipfile Pipfile.lock /code/
-RUN pip install pipenv && pipenv install --system && \
+COPY requirements.txt /code/
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
     pip install gunicorn
-
-# Remove build dependencies
-RUN apk --purge del .build-deps
 
 # Copy project
 COPY . /code/
