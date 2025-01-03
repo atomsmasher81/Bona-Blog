@@ -19,3 +19,5 @@ htmlcov/
 coverage.xml
 
 .env
+staticfiles/
+media/
