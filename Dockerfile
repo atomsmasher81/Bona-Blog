@@ -44,7 +44,7 @@ RUN pip install pipenv && pipenv install --system
 COPY . /code/
 
 # Set ownership
-RUN chown -R www-data:www-data /code
+RUN chown -R www-data:www-data /code /code/staticfiles /code/media
 
 # Switch to www-data user
 USER www-data

@@ -4,7 +4,8 @@ services:
   web:
     build: .
     command: >
-      sh -c "python manage.py collectstatic --noinput &&
+      sh -c "chmod -R 755 /code/staticfiles &&
+             python manage.py collectstatic --noinput &&
              gunicorn bona_blog.wsgi:application --bind 0.0.0.0:8001"
     volumes:
       - /var/www/blog.signwith.co/staticfiles:/code/staticfiles
