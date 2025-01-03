@@ -4,12 +4,31 @@
 FROM python:3.7-alpine
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Install PostgreSQL client dependencies
-RUN apk add --no-cache postgresql-libs
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
+# Install system dependencies
+RUN apk add --no-cache \
+    postgresql-libs \
+    jpeg-dev \
+    zlib-dev \
+    freetype-dev \
+    lcms2-dev \
+    openjpeg-dev \
+    tiff-dev \
+    tk-dev \
+    tcl-dev \
+    harfbuzz-dev \
+    fribidi-dev
+
+# Install build dependencies
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    musl-dev \
+    postgresql-dev \
+    python3-dev \
+    libffi-dev \
+    build-base
 
 # Set work directory
 WORKDIR /code
