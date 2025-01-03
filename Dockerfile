@@ -32,10 +32,6 @@ WORKDIR /code
 # Create static and media directories
 RUN mkdir -p /code/staticfiles /code/media
 
-# Modify www-data user (it already exists in debian)
-RUN usermod -u 82 www-data && \
-    groupmod -g 82 www-data
-
 # Install dependencies
 COPY Pipfile Pipfile.lock /code/
 RUN pip install pipenv && pipenv install --system
@@ -43,8 +39,9 @@ RUN pip install pipenv && pipenv install --system
 # Copy project
 COPY . /code/
 
-# Set ownership
-RUN chown -R www-data:www-data /code /code/staticfiles /code/media
-
-# Switch to www-data user
+# Set permissions
+RUN chown -R www-data:www-data /code
 USER www-data
+
+# Collect static files will happen in docker-compose command
+

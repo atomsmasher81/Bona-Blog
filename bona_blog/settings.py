@@ -157,7 +157,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "blog/static"),
 ]
-STATIC_ROOT = '/var/www/blog.signwith.co/staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -165,7 +165,7 @@ STATICFILES_FINDERS = [
 
 # Media files (User uploaded images)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/blog.signwith.co/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Specifies the CSS Framework Crispy Forms should use.
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
