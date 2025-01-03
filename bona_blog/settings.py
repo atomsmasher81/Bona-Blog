@@ -57,13 +57,16 @@ INSTALLED_APPS = [
 
  ]
 
-if DEBUG == 'True':
+if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
 
 INTERNAL_IPS = ['127.0.0.1', '::1']
 
-MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+MIDDLEWARE = []
+if DEBUG:
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+MIDDLEWARE.extend([
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,7 +74,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+])
+    
+
 
 ROOT_URLCONF = 'bona_blog.urls'
 
